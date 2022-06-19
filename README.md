@@ -1,3 +1,3 @@
 # Concetration
 
-Concetration (like a memory) game
+Concetration (like a memory) iOS game

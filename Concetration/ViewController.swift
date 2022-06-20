@@ -9,7 +9,12 @@ import UIKit
 
 class ViewController: UIViewController {
 
-    lazy var game = Game(numberOfPairOfCards: buttons.count/2)
+    lazy var game = Game(numberOfPairOfCards: numberOfPairOfCards)
+    
+    var numberOfPairOfCards: Int {
+        return (buttons.count+1)/2
+    }
+    
     var emojiCollection = ["🐨", "🐰", "🐯", "🐒", "🐻", "🦄"]
     
     var touchesCount = 0 {

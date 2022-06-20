@@ -29,7 +29,26 @@ class Game {
     
     var cards: [Card] = []
     
-    var indexOfFaceUpCard: Int?
+    var indexOfFaceUpCard: Int? {
+        get {
+            var foundIndex: Int?
+            for index in cards.indices {
+                if cards[index].isFaceUp {
+                    if foundIndex == nil {
+                        foundIndex = index
+                    } else {
+                        return nil
+                    }
+                }
+            }
+            return foundIndex
+        }
+        set {
+            for index in cards.indices {
+                cards[index].isFaceUp = (index == newValue)
+            }
+        }
+    }
     
     func checkCard(at index: Int) {
         if !cards[index].isMatched {
@@ -39,12 +58,7 @@ class Game {
                     cards[index].isMatched = true
                 }
                 cards[index].isFaceUp = true
-                indexOfFaceUpCard = nil
             } else {
-                for i in cards.indices {
-                    cards[i].isFaceUp = false
-                }
-                cards[index].isFaceUp = true
                 indexOfFaceUpCard = index
             }
         }

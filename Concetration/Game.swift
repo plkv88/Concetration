@@ -7,14 +7,23 @@
 
 import Foundation
 
-struct Card {
-    var identifier: Int
+struct Card: Hashable {
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(identifier)
+    }
+    
+    static func ==(lhs: Card, rhs: Card) -> Bool {
+        return lhs.identifier == rhs.identifier
+    }
+    
+    private var identifier: Int
     var isMatched = false
     var isFaceUp = false
     
-    static var identifierNumber = 0
+    private static var identifierNumber = 0
     
-    static func identifierGenerator() -> Int {
+    private static func identifierGenerator() -> Int {
         identifierNumber += 1
         return identifierNumber
     }
@@ -27,9 +36,9 @@ struct Card {
 
 class Game {
     
-    var cards: [Card] = []
+    private(set) var cards: [Card] = []
     
-    var indexOfFaceUpCard: Int? {
+    private var indexOfFaceUpCard: Int? {
         get {
             var foundIndex: Int?
             for index in cards.indices {
@@ -53,7 +62,7 @@ class Game {
     func checkCard(at index: Int) {
         if !cards[index].isMatched {
             if let matchingIndex = indexOfFaceUpCard, matchingIndex != index {
-                if cards[matchingIndex].identifier == cards[index].identifier {
+                if cards[matchingIndex] == cards[index] {
                     cards[matchingIndex].isMatched = true
                     cards[index].isMatched = true
                 }
